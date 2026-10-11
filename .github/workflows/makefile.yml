@@ -1,0 +1,27 @@
+name: Makefile CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'releases/**'
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: dependencies
+        run: sudo apt-get install texlive-full rubber make
+
+      - name: compile document
+        run: make
+
+      - uses: actions/upload-artifact@v7
+        with:
+          path: TDPTemplate.pdf
+          archive: false
